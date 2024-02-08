@@ -7,6 +7,7 @@ public class EasyCommerceDbContext:DbContext
 {
     public EasyCommerceDbContext(DbContextOptions options) : base(options)
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 

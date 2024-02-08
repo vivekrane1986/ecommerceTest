@@ -99,13 +99,11 @@ public class CategoryRepositoryTests
     private IEnumerable<Category> GetSampleCategoryData(string? name = null)
     {
         if (string.IsNullOrWhiteSpace(name))
-            _fixture.Build<Category>()
-                      .Without(c => c.Products)
+            _fixture.Build<Category>()                      
                       .CreateMany(ItemListCount);
 
         return _fixture.Build<Category>()
-                      .With(c => c.Name, name)
-                      .Without(c => c.Products)
+                      .With(c => c.Name, name)                     
                       .CreateMany(ItemListCount);
     }
 }

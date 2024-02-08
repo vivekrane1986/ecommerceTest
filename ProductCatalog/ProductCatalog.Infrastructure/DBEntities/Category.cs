@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace ProductCatalog.Infrastructure.DBEntities;
+﻿namespace ProductCatalog.Infrastructure.DBEntities;
 
 public class Category
 {
@@ -10,5 +8,4 @@ public class Category
 
     public string Description { get; set; }
 
-    public virtual Collection<Product> Products { get; set; }
 }

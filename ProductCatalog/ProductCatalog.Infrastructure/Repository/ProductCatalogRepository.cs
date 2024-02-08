@@ -54,12 +54,17 @@ public class ProductCatalogRepository : IProductCatalogRepository
 
     public async Task<IEnumerable<ProductEntity>> GetByCategoryAsync(string categoryName)
     {
-        var category = await _dbContext.Categories
-            .Include(p => p.Products)
-            .Where(p => p.Name == categoryName)
-            .FirstOrDefaultAsync();
+        var products = await _dbContext.Products
+            .Include(p => p.Category)
+            .Where(p => p.Category.Name == categoryName)
+            .ToListAsync();
+        
+        if(products is null || !products.Any())
+        {
+            throw new NoDataFoundException($"There is no product for category {categoryName}");
+        }
 
-        return _mapper.Map<IEnumerable<ProductEntity>>(category.Products);
+        return _mapper.Map<List<ProductEntity>>(products);
 
     }
 

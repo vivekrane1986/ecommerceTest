@@ -121,6 +121,24 @@ public class ProductCatalogRepositoryTests
     }
 
     [Fact]
+    public async Task GetByCategoryAsync_Throws_NoDataFoundException()
+    {
+        var categoryName = "Test";
+        //setup
+        using var _dbContext = new SqliteInMemoryRepositoryTest().CreateContext();
+               
+
+        var sut = new ProductCatalogRepository(_dbContext, _mapper, _logger.Object);
+
+        //Act
+        var result = await Record.ExceptionAsync(()=>  sut.GetByCategoryAsync(categoryName));
+
+        //Assert       
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NoDataFoundException>();
+    }
+
+    [Fact]
     public async Task GetByIdAsync_Success()
     {    
         //setup
@@ -146,13 +164,11 @@ public class ProductCatalogRepositoryTests
     private IEnumerable<Category> GetSampleCategoryData(string? name=null)
     {
         if(string.IsNullOrWhiteSpace(name)) 
-            _fixture.Build<Category>()                     
-                      .Without(c => c.Products)
+            _fixture.Build<Category>()
                       .CreateMany(ItemListCount);
 
         return _fixture.Build<Category>()
-                      .With(c => c.Name, name)
-                      .Without(c => c.Products)
+                      .With(c => c.Name, name)                  
                       .CreateMany(ItemListCount);
     }
 

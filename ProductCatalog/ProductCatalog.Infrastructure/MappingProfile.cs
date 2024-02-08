@@ -10,7 +10,6 @@ public class MappingProfile : Profile
     {
         CreateMap<ProductEntity, Product>().ReverseMap();
 
-        CreateMap<CategoryEntity, Category>().ReverseMap();
-     
+        CreateMap<CategoryEntity, Category>().ReverseMap();     
     }
 }

@@ -4,7 +4,7 @@ using Moq;
 using ProductCatalog.API.Controllers;
 using ProductCatalog.Application.Commands;
 using ProductCatalog.Application.Queries;
-using ProductCatalog.Application.Resources;
+using ProductCatalog.Domain.Entities;
 
 namespace ProductCatalog.API.Tests
 {
@@ -21,28 +21,28 @@ namespace ProductCatalog.API.Tests
         public async Task GetByCategory_Success()
         {
             //Arrange
-            _mockSender.Setup(s => s.Send(It.IsAny<GetAllProductsByCategoryQuery>(), default)).ReturnsAsync(new List<Product>() { new() });
+            _mockSender.Setup(s => s.Send(It.IsAny<GetAllProductsByCategoryQuery>(), default)).ReturnsAsync(new List<ProductEntity>() { new() });
             //Act
             var sut = new ProductCatalogController(_mockSender.Object);
             var result = await sut.GetByCategory(string.Empty);
 
             //Assert
             result.Should().NotBeEmpty();
-            result.Should().BeOfType<List<Product>>();
+            result.Should().BeOfType<List<ProductEntity>>();
         }
 
         [Fact]
         public async Task Get_Success()
         {
             //Arrange
-            _mockSender.Setup(s => s.Send(It.IsAny<GetProductsByIdQuery>(), default)).ReturnsAsync(new Product() { Category = default });
+            _mockSender.Setup(s => s.Send(It.IsAny<GetProductsByIdQuery>(), default)).ReturnsAsync(new ProductEntity() { CategoryName = default });
             //Act
             var sut = new ProductCatalogController(_mockSender.Object);
             var result = await sut.Get(default);
 
             //Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<Product>();
+            result.Should().BeOfType<ProductEntity>();
         }
 
         [Fact]

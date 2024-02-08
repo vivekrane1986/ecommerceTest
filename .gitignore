@@ -22,3 +22,5 @@
 /Tests/ProductCatalog.Infrastructure.Tests/obj
 /Tests/ProductCatalog.Infrastructure.Tests2/bin/Debug/net6.0
 /Tests/ProductCatalog.Infrastructure.Tests2/obj
+/Basket/Basket.API/bin/Debug/net6.0
+/Basket/Basket.API/obj

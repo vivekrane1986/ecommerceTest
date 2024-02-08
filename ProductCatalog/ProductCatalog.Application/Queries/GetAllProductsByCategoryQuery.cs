@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
-using ProductCatalog.Application.Resources;
+using ProductCatalog.Domain.Entities;
 using ProductCatalog.Domain.Repository;
 
 namespace ProductCatalog.Application.Queries;
 
-public record GetAllProductsByCategoryQuery(string CategoryName) : IRequest<IEnumerable<Product>>;
+public record GetAllProductsByCategoryQuery(string CategoryName) : IRequest<IEnumerable<ProductEntity>>;
 
-public class GetAllProductsByCategoryQueryHandler : IRequestHandler<GetAllProductsByCategoryQuery, IEnumerable<Product>>
+public class GetAllProductsByCategoryQueryHandler : IRequestHandler<GetAllProductsByCategoryQuery, IEnumerable<ProductEntity>>
 {
     private readonly IProductCatalogRepository _productCatalogRepository;
     private IMapper _mapper;
@@ -19,9 +19,8 @@ public class GetAllProductsByCategoryQueryHandler : IRequestHandler<GetAllProduc
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Product>> Handle(GetAllProductsByCategoryQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ProductEntity>> Handle(GetAllProductsByCategoryQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productCatalogRepository.GetByCategoryAsync(request.CategoryName);
-        return _mapper.Map<IEnumerable<Product>>(products);
+        return await _productCatalogRepository.GetByCategoryAsync(request.CategoryName);        
     }
 }

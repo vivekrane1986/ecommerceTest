@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
-using ProductCatalog.Application.Resources;
+using ProductCatalog.Domain.Entities;
 using ProductCatalog.Domain.Repository;
 
 namespace ProductCatalog.Application.Queries;
 
-public record GetProductsByIdQuery(Guid id) : IRequest<Product>;
+public record GetProductsByIdQuery(Guid id) : IRequest<ProductEntity>;
 
-public class GetProductsByIdQueryHandler : IRequestHandler<GetProductsByIdQuery, Product>
+public class GetProductsByIdQueryHandler : IRequestHandler<GetProductsByIdQuery, ProductEntity>
 {
     private IProductCatalogRepository _productCatelogRepository;
     private IMapper _mapper;
@@ -18,10 +18,8 @@ public class GetProductsByIdQueryHandler : IRequestHandler<GetProductsByIdQuery,
         _mapper = mapper;
     }
 
-    public async Task<Product> Handle(GetProductsByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ProductEntity> Handle(GetProductsByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productCatelogRepository.GetByIdAsync(request.id);
-
-        return _mapper.Map<Product>(product);
+       return await _productCatelogRepository.GetByIdAsync(request.id);        
     }
 }
