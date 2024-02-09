@@ -27,3 +27,10 @@
 /Basket/Basket.Application/obj
 /Basket/Basket.Domain/obj
 /Basket/Basket.Infrastrcuture/obj
+/Basket/Basket.Application/bin/Debug/net6.0
+/Basket/Basket.Domain/bin/Debug/net6.0
+/Basket/Basket.Infrastrcuture/bin/Debug/net6.0
+/Membership/Membership.API/obj/Debug/net6.0
+/Membership/Membership.API/obj
+/Tests/Basket.Infrastructure.Tests/Basket.Infrastructure.Tests/bin/Debug/net6.0
+/Tests/Basket.Infrastructure.Tests/Basket.Infrastructure.Tests/obj

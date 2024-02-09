@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Basket.Application\Basket.Application.csproj" />
-    <ProjectReference Include="..\Basket.Infrastrcuture\Basket.Infrastrcuture.csproj" />
   </ItemGroup>
 
 </Project>
