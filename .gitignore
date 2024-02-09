@@ -24,3 +24,6 @@
 /Tests/ProductCatalog.Infrastructure.Tests2/obj
 /Basket/Basket.API/bin/Debug/net6.0
 /Basket/Basket.API/obj
+/Basket/Basket.Application/obj
+/Basket/Basket.Domain/obj
+/Basket/Basket.Infrastrcuture/obj
