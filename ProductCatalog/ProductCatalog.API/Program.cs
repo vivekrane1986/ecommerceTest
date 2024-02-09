@@ -3,6 +3,7 @@ using ProductCatalog.Application;
 using ProductCatalog.Infrastructure;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using Azure.Identity;
 
 [ExcludeFromCodeCoverage(Justification = "This class will be tested as a part of Integration tests")]
 
@@ -18,6 +19,9 @@ public static class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddApplicationInsightsTelemetry();
+
+        AddKeyVault(builder.Configuration);
         AddDependencies(builder.Services);
 
         var app = builder.Build();
@@ -45,5 +49,12 @@ public static class Program
         services.AddApplication();
         services.AddInfrastructure();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+    }
+
+    private static void AddKeyVault(ConfigurationManager config)
+    {
+        var credential = new DefaultAzureCredential();
+
+        config.AddAzureKeyVault(new Uri($"https://{config["KeyVaultName"]}.vault.azure.net/"), credential);
     }
 }

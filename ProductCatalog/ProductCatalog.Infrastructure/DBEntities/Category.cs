@@ -1,5 +1,8 @@
-﻿namespace ProductCatalog.Infrastructure.DBEntities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace ProductCatalog.Infrastructure.DBEntities;
+
+[Table(name: "Categories")]
 public class Category
 {
     public Guid Id { get; set; }

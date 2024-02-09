@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using ProductCatalog.Domain.Exceptions;
 
 namespace ProductCatalog.API.Middleware;
 
@@ -36,6 +37,12 @@ public class ExceptionHandlingMiddleware
             }
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             await httpContext.Response.WriteAsJsonAsync(errorDetails);
+        }
+        catch(NoDataFoundException ex)
+        {
+            _logger.LogError(ex.Message);
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await httpContext.Response.WriteAsJsonAsync(ex.Message);
         }
         catch (Exception ex)
         {

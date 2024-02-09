@@ -21,7 +21,7 @@ public class AddProductCommandHandler : IRequestHandler<AddProductCommand>
     public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var product = new ProductEntity() { Id = Guid.NewGuid(), Name = request.Name, Description = request.Description, CategoryName = request.CategoryName };
-
+        
         await _validator.ValidateAndThrowAsync(request);
 
         await _productCatalogRepository.AddAsync(product);

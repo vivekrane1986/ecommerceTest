@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProductCatalog.API.Middleware;
+using ProductCatalog.Domain.Exceptions;
 
 namespace ProductCatalog.API.Tests;
 
@@ -67,6 +68,22 @@ public class ExceptionHandlingMiddlewareTests
         //Assert
         httpContext.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
 
+    }
+
+    [Fact]
+    public async Task InvokeAsync_Returns_StatusBadRequest_When_NoDataFound()
+    {
+        //Arrange
+        _mockNext.Setup(n => n(It.IsAny<HttpContext>())).ThrowsAsync(new NoDataFoundException("Test"));
+
+        //Act
+        var sut = new ExceptionHandlingMiddleware(_mockLogger.Object, _mockNext.Object);
+        var httpContext = new DefaultHttpContext();
+        await sut.InvokeAsync(httpContext);
+        
+        //Assert
+        httpContext.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+        
     }
 
 }

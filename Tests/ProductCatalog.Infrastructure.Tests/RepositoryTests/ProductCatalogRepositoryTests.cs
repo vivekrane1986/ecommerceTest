@@ -42,7 +42,7 @@ public class ProductCatalogRepositoryTests
         var sut = new ProductCatalogRepository(_dbContext, _mapper, _logger.Object);
 
         //Act
-        var result = await sut.AddAsync(new() { Name = "Test", Id = Guid.NewGuid(), CategoryName = category.Name });
+        var result = await sut.AddAsync(new() { Name = "Test", Id = Guid.NewGuid(), Code = "Test1", Price = default, CategoryName = category.Name });
 
         //Assert       
         result.Should().Be(1);
@@ -117,7 +117,7 @@ public class ProductCatalogRepositoryTests
 
         //Assert       
         result.Should().HaveCount(ItemListCount);
-        result.All(r=>r.CategoryName== categoryName).Should().BeTrue();   
+        result.All(r => r.CategoryName == categoryName).Should().BeTrue();
     }
 
     [Fact]
@@ -126,12 +126,12 @@ public class ProductCatalogRepositoryTests
         var categoryName = "Test";
         //setup
         using var _dbContext = new SqliteInMemoryRepositoryTest().CreateContext();
-               
+
 
         var sut = new ProductCatalogRepository(_dbContext, _mapper, _logger.Object);
 
         //Act
-        var result = await Record.ExceptionAsync(()=>  sut.GetByCategoryAsync(categoryName));
+        var result = await Record.ExceptionAsync(() => sut.GetByCategoryAsync(categoryName));
 
         //Assert       
         result.Should().NotBeNull();
@@ -140,12 +140,12 @@ public class ProductCatalogRepositoryTests
 
     [Fact]
     public async Task GetByIdAsync_Success()
-    {    
+    {
         //setup
         using var _dbContext = new SqliteInMemoryRepositoryTest().CreateContext();
 
-        var category = GetSampleCategoryData().First();        
-        await _dbContext.Categories.AddAsync(category);  
+        var category = GetSampleCategoryData().First();
+        await _dbContext.Categories.AddAsync(category);
         await _dbContext.SaveChangesAsync();
 
         var products = GetSampleProducts(category);
@@ -158,23 +158,23 @@ public class ProductCatalogRepositoryTests
         var result = await sut.GetByIdAsync(products.First().Id);
 
         //Assert       
-        result.Should().NotBeNull();       
+        result.Should().NotBeNull();
     }
 
-    private IEnumerable<Category> GetSampleCategoryData(string? name=null)
+    private IEnumerable<Category> GetSampleCategoryData(string? name = null)
     {
-        if(string.IsNullOrWhiteSpace(name)) 
+        if (string.IsNullOrWhiteSpace(name))
             _fixture.Build<Category>()
                       .CreateMany(ItemListCount);
 
         return _fixture.Build<Category>()
-                      .With(c => c.Name, name)                  
+                      .With(c => c.Name, name)
                       .CreateMany(ItemListCount);
     }
 
     private IEnumerable<Product> GetSampleProducts(Category category)
     {
-        return _fixture.Build<Product>()                      
+        return _fixture.Build<Product>()
                       .With(c => c.Category, category)
                       .CreateMany(ItemListCount);
     }

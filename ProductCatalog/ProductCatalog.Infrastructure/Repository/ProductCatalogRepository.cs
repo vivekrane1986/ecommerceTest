@@ -59,7 +59,7 @@ public class ProductCatalogRepository : IProductCatalogRepository
             .Where(p => p.Category.Name == categoryName)
             .ToListAsync();
         
-        if(products is null || !products.Any())
+        if(!products.Any())
         {
             throw new NoDataFoundException($"There is no product for category {categoryName}");
         }
