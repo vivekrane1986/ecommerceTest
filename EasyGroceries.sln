@@ -30,6 +30,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API", "Basket\Basket.API\Basket.API.csproj", "{6F611820-7A36-4347-A4B5-88F5CCF57EB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{9EB4C3DE-7B79-4E2B-8BD1-425780715850}"
+	ProjectSection(SolutionItems) = preProject
+		Basket\Basket.Domain\IBasketRepository.cs = Basket\Basket.Domain\IBasketRepository.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Membership", "Membership", "{840AD332-626D-4A6C-8A42-F2CECA0C01FB}"
 EndProject

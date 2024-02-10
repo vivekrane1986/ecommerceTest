@@ -21,7 +21,7 @@ public class CheckoutBasketCommandHandler : IRequestHandler<CheckoutBasketComman
 
     public async Task<bool> Handle(CheckoutBasketCommand request, CancellationToken cancellationToken)
     {
-         await _basketRepository.SaveBasketDetailsAsync(request.BasketEntity);
+        await _basketRepository.SaveBasketDetailsAsync(request.BasketEntity);
 
         return true;
     }
