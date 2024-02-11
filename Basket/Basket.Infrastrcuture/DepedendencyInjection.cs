@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly.Extensions.Http;
 using Polly;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Azure.ServiceBus;
 
 namespace Basket.Infrastrcuture;
 
@@ -22,10 +23,16 @@ public static class DepedendencyInjection
         });
 
         services.AddScoped<IBasketRepository, BasketRepository>();
-        services.AddHttpClient<IMembershipService, MembershipService>(client =>
+        services.AddSingleton<IQueueClient>(new QueueClient(config["ServiceBusConnectionString"], config["ServiceBus:QueueName"]));
+
+        services.AddScoped<IMessagePublisher, MessagePublisher>();
+
+        services.AddHttpClient(HttpClientConsts.MembershipDataHttpClient, client =>
         {
-            client.BaseAddress = new Uri(config["Membership.BaseUrl"]);
+            client.BaseAddress = new Uri(config["Membership:BaseUrl"]);
         }).AddPolicyHandler(GetRetryPolicy());
+
+        services.AddScoped<IMembershipService, MembershipService>();
 
         return services;
     }

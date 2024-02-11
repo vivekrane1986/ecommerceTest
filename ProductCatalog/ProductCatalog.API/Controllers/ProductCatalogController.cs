@@ -34,7 +34,7 @@ namespace ProductCatalog.API.Controllers
         [HttpPost]
         public async Task Post([FromBody] ProductEntity product)
         {
-            await _sender.Send(new AddProductCommand(product.Name,product.Description,product.CategoryName));
+            await _sender.Send(new AddProductCommand(product.Name,product.Description,product.CategoryName,product.Code));
         }
         
     }

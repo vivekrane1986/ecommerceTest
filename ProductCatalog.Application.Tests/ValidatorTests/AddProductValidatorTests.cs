@@ -24,7 +24,7 @@ namespace ProductCatalog.Application.Tests.ValidatorTests
             //Act
             var sut = new AddProductValidator(_mockCategoryRepository.Object);
 
-            var result = await sut.ValidateAsync(new AddProductCommand(string.Empty,string.Empty,string.Empty));
+            var result = await sut.ValidateAsync(new AddProductCommand(string.Empty,string.Empty,string.Empty, string.Empty));
             //Assert
             result.Should().NotBeNull();
             result.Errors.Should().HaveCount(3);
@@ -39,7 +39,7 @@ namespace ProductCatalog.Application.Tests.ValidatorTests
             //Act
             var sut = new AddProductValidator(_mockCategoryRepository.Object);
 
-            var result = await sut.ValidateAsync(new AddProductCommand("Test", "Test", "Test"));
+            var result = await sut.ValidateAsync(new AddProductCommand("Test", "Test", "Test","Test"));
             
             //Assert
             result.Should().NotBeNull();

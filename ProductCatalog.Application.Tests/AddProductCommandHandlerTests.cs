@@ -42,7 +42,7 @@ public class AddProductCommandHandlerTests
         //Act
         var sut = new AddProductCommandHandler(_mockProductCatalogRepository.Object, _mockValidator.Object);
 
-        var result = await Record.ExceptionAsync(() => sut.Handle(new(string.Empty, string.Empty, string.Empty), CancellationToken.None));
+        var result = await Record.ExceptionAsync(() => sut.Handle(new(string.Empty, string.Empty, string.Empty, string.Empty), CancellationToken.None));
 
         //Assert
         result.Should().BeNull();
@@ -62,7 +62,7 @@ public class AddProductCommandHandlerTests
         //Act
         var sut = new AddProductCommandHandler(_mockProductCatalogRepository.Object, _mockValidator.Object);
 
-        var result = await Record.ExceptionAsync(() => sut.Handle(new(string.Empty, string.Empty, string.Empty), CancellationToken.None));
+        var result = await Record.ExceptionAsync(() => sut.Handle(new(string.Empty, string.Empty, string.Empty,string.Empty), CancellationToken.None));
 
         //Assert
         result.Should().NotBeNull();

@@ -20,6 +20,7 @@ public static class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddApplicationInsightsTelemetry();
+        
 
         AddKeyVault(builder.Configuration);
         AddDependencies(builder.Services);
@@ -53,7 +54,7 @@ public static class Program
 
     private static void AddKeyVault(ConfigurationManager config)
     {
-        var credential = new DefaultAzureCredential();
+        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ExcludeEnvironmentCredential = true });
 
         config.AddAzureKeyVault(new Uri($"https://{config["KeyVaultName"]}.vault.azure.net/"), credential);
     }

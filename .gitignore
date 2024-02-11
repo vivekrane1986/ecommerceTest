@@ -35,3 +35,15 @@
 /Tests/Basket.Infrastructure.Tests/Basket.Infrastructure.Tests/bin/Debug/net6.0
 /Tests/Basket.Infrastructure.Tests/Basket.Infrastructure.Tests/obj
 /Membership/Membership.API/bin/Debug/net6.0
+/ProductCatalog/ProductCatalog.API/bin/Release/net6.0
+/ProductCatalog/ProductCatalog.API/Properties/PublishProfiles
+/ProductCatalog/ProductCatalog.API/Properties/ServiceDependencies/ecommercetestsb - Web Deploy
+/ProductCatalog/ProductCatalog.API/Properties
+/ProductCatalog/ProductCatalog.Application/bin/Release/net6.0
+/ProductCatalog/ProductCatalog.Domain/bin/Release/net6.0
+/ProductCatalog/ProductCatalog.Infrastructure/bin/Release/net6.0
+/Basket/Basket.API/bin/Release/net6.0
+/Basket/Basket.API/Properties
+/Basket/Basket.Application/bin/Release/net6.0
+/Basket/Basket.Domain/bin/Release/net6.0
+/Basket/Basket.Infrastrcuture/bin/Release/net6.0

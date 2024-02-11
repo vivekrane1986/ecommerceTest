@@ -1,25 +1,24 @@
-﻿using AutoMapper;
-using Basket.Domain;
+﻿using Basket.Domain;
 using Basket.Domain.Entities;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Basket.Application.Command;
 
-public record AddItemInBasketCommand(BasketEntity BasketEntity) : IRequest<bool>;
+public record AddItemInBasketCommand(BasketEntity BasketEntity) : IRequest<string>;
 
 
 [ExcludeFromCodeCoverage(Justification = "Sample code so not covering all Classes")]
-public class AddItemInBasketCommandHandler : IRequestHandler<AddItemInBasketCommand, bool>
+public class AddItemInBasketCommandHandler : IRequestHandler<AddItemInBasketCommand, string>
 {
     private IBasketRepository _basketRepository;    
 
-    public AddItemInBasketCommandHandler(IBasketRepository basketRepository, IMapper mapper)
+    public AddItemInBasketCommandHandler(IBasketRepository basketRepository)
     {
         _basketRepository = basketRepository;
     }
 
-    public async Task<bool> Handle(AddItemInBasketCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(AddItemInBasketCommand request, CancellationToken cancellationToken)
     {
         return await _basketRepository.AddItemAsync(request.BasketEntity);
     }

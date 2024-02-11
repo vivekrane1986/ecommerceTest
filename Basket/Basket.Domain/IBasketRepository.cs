@@ -4,11 +4,11 @@ namespace Basket.Domain;
 
 public interface IBasketRepository
 {
-    Task<bool> AddItemAsync(BasketEntity entity);
+    Task<string> AddItemAsync(BasketEntity entity);
 
     Task<bool> RemoveItemAsync(BasketEntity entity);
 
-    Task<List<BasketEntity>> GetAllBasketItemsAsync(Guid orderId);
+    Task<List<BasketEntity>> GetAllBasketItemsAsync(string CustomerId);
 
     Task<bool> SaveBasketDetailsAsync(List<BasketEntity> basketEntities);
 }

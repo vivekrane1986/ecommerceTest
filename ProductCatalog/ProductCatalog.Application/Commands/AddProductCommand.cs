@@ -5,7 +5,7 @@ using ProductCatalog.Domain.Repository;
 
 namespace ProductCatalog.Application.Commands;
 
-public record AddProductCommand(string Name, string Description, string CategoryName) : IRequest;
+public record AddProductCommand(string Name, string Description, string CategoryName, string Code) : IRequest;
 
 public class AddProductCommandHandler : IRequestHandler<AddProductCommand>
 {
@@ -20,7 +20,7 @@ public class AddProductCommandHandler : IRequestHandler<AddProductCommand>
 
     public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
-        var product = new ProductEntity() { Id = Guid.NewGuid(), Name = request.Name, Description = request.Description, CategoryName = request.CategoryName };
+        var product = new ProductEntity() { Id = Guid.NewGuid(), Name = request.Name, Description = request.Description, CategoryName = request.CategoryName, Code=request.Code };
         
         await _validator.ValidateAndThrowAsync(request);
 

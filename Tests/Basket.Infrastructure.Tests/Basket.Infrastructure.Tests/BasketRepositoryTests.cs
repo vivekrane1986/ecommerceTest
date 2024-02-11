@@ -36,15 +36,15 @@ public class BasketRepositoryTests
         var result = await sut.AddItemAsync(new());
 
         //Assert
-        result.Should().BeTrue();
+        result.Should().NotBeNull();
     }
 
     [Fact]
     public async Task GetAllBasketItemsAsync_Success()
     {
         //Arrange
-        var orderId = Guid.NewGuid();
-        var serializedData = JsonSerializer.Serialize(_fixture.Build<BasketEntity>().With(b => b.OrderId, orderId).CreateMany(5));
+        var customerId = Guid.NewGuid().ToString();
+        var serializedData = JsonSerializer.Serialize(_fixture.Build<BasketEntity>().With(b => b.CustomerId, customerId).CreateMany(5));
         var dataAsByteArray = Encoding.UTF8.GetBytes(serializedData);
 
         _mockCache.Setup(c => c.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(dataAsByteArray);
@@ -52,7 +52,7 @@ public class BasketRepositoryTests
         var sut = new BasketRepository(_mockCache.Object);
         //Act
 
-        var result = await sut.GetAllBasketItemsAsync(orderId);
+        var result = await sut.GetAllBasketItemsAsync(customerId);
 
         //Assert
         result.Should().HaveCount(5);
@@ -63,7 +63,7 @@ public class BasketRepositoryTests
     public async Task GetAllBasketItemsAsync_Return_Null_When_NoData(string? data)
     {
         //Arrange
-        var orderId = Guid.NewGuid();
+        var customerId = Guid.NewGuid().ToString();
 
         var dataAsByteArray = Encoding.UTF8.GetBytes(data);
 
@@ -72,7 +72,7 @@ public class BasketRepositoryTests
         var sut = new BasketRepository(_mockCache.Object);
         //Act
 
-        var result = await sut.GetAllBasketItemsAsync(orderId);
+        var result = await sut.GetAllBasketItemsAsync(customerId);
 
         //Assert
         result.Should().BeNull();
@@ -87,7 +87,7 @@ public class BasketRepositoryTests
         var sut = new BasketRepository(_mockCache.Object);
         //Act
 
-        var result = await sut.RemoveItemAsync(new());
+        var result = await sut.RemoveItemAsync(_fixture.Build<BasketEntity>().Create());
 
         //Assert
         result.Should().BeTrue();

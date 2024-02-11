@@ -1,7 +1,11 @@
 using System.Reflection;
 using Basket.Infrastrcuture;
-using Basket.Application; 
+using Basket.Application;
+using System.Diagnostics.CodeAnalysis;
+using Azure.Identity;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
+[ExcludeFromCodeCoverage(Justification = "Sample code - not covering all Classes")]
 public static class Program
 {
     public static void Main(string[] args)
@@ -14,7 +18,8 @@ public static class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        AddKeyVault(builder.Configuration);
+               
         AddDependencies(builder.Services, builder.Configuration);
 
         var app = builder.Build();
@@ -40,5 +45,12 @@ public static class Program
         services.AddApplication();
         services.AddInfrastructure(configuration);
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+    }
+
+    private static void AddKeyVault(ConfigurationManager config)
+    {
+        var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions {ExcludeEnvironmentCredential=true });
+
+        config.AddAzureKeyVault(new Uri($"https://{config["KeyVaultName"]}.vault.azure.net/"), credential);
     }
 }

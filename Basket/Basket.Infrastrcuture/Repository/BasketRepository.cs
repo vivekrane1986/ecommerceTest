@@ -15,18 +15,24 @@ namespace Basket.Infrastrcuture.Repository
             _cache = cache;
         }
 
-        public async Task<bool> AddItemAsync(BasketEntity entity)
+        public async Task<string> AddItemAsync(BasketEntity entity)
         {
+            var customerId= Guid.NewGuid().ToString();
+            if (entity.CustomerId is null)
+            {
+                entity.CustomerId = customerId;
+            }
+
             var serializedData = JsonSerializer.Serialize(entity);
             var dataAsByteArray = Encoding.UTF8.GetBytes(serializedData);
-            await _cache.SetAsync(entity.OrderId.ToString(), dataAsByteArray);
+            await _cache.SetAsync(entity.CustomerId, dataAsByteArray);
 
-            return true;
+            return customerId;
         }
 
-        public async Task<List<BasketEntity>> GetAllBasketItemsAsync(Guid orderId)
+        public async Task<List<BasketEntity>> GetAllBasketItemsAsync(string customerId)
         {
-            var dataAsByteArray = await _cache.GetAsync(orderId.ToString());
+            var dataAsByteArray = await _cache.GetAsync(customerId);
 
             if ((dataAsByteArray.Count()) > 0)
             {
@@ -41,13 +47,14 @@ namespace Basket.Infrastrcuture.Repository
 
         public async Task<bool> RemoveItemAsync(BasketEntity entity)
         {
-            await _cache.RemoveAsync(entity.OrderId.ToString());
+            await _cache.RemoveAsync(entity.CustomerId.ToString());
 
             return true;
         }
 
         public async Task<bool> SaveBasketDetailsAsync(List<BasketEntity> basketEntities)
         {
+           
             await Task.FromResult(basketEntities);
 
             return true;
