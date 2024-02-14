@@ -33,8 +33,7 @@ public class AddProductCommandHandlerTests
     public async Task AddProductCommandHandler_Handle_Success()
     {
         //Arrange
-        _mockProductCatalogRepository.Setup(pc => pc.AddAsync(It.IsAny<ProductEntity>()));
-        //_mockValidator.Setup(v => v.ValidateAsync(It.IsAny<AddProductCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ValidationResult());
+        _mockProductCatalogRepository.Setup(pc => pc.AddAsync(It.IsAny<ProductEntity>()));      
 
         _mockValidator.Setup(p => p.ValidateAsync(It.Is<ValidationContext<AddProductCommand>>(context => !context.ThrowOnFailures), It.IsAny<CancellationToken>()))
             .ReturnsAsync(_fixture.Build<ValidationResult>().Create());
